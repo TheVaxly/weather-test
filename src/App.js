@@ -12,7 +12,7 @@ function App() {
   const [selectedCities, setSelectedCities] = useState([]);
 
   const fetchCities = () => {
-    fetch(`https://openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=439d4b804bc8187953eb36d2a8c26a02`)
+    fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5`)
       .then((response) => response.json())
       .then((cities) => {
         setSearchResults(
