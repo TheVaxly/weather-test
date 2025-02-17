@@ -1,12 +1,11 @@
 import React from 'react';
+import WeatherCard from './WeatherCard';
 
 function SelectedCities({ selectedCities }) {
   return (
     <div data-testid="my-weather-list">
       {selectedCities.map((city) => (
-        <div key={`${city.lat}-${city.lon}`}>
-          {city.name}
-        </div>
+        <WeatherCard key={'${city.lat}-${city.lon}'} city={city} />
       ))}
     </div>
   );
