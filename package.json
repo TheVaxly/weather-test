@@ -37,6 +37,7 @@
     ]
   },
   "devDependencies": {
-    "mirage.js": "^1.0.0"
+    "mirage.js": "^1.0.0",
+    "miragejs": "^0.1.48"
   }
 }
