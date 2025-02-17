@@ -77,7 +77,7 @@ describe('Weather Application tests', () => {
 });
 
 describe('WeatherCard component tests', () => {
-  it('renders city component', () => {
+  it('renders city name', () => {
     const city = {
       name: 'Melbourne',
       country: 'Australia',
@@ -87,6 +87,18 @@ describe('WeatherCard component tests', () => {
     };
 
     render(<WeatherCard city={city} />);
-    expect(screen.getByText(12.59)).toBeInTheDocument();
+    expect(screen.getByText(city.name)).toBeInTheDocument();
+  });
+  it('renders tempeture', async () => {
+    const city = {
+      name: 'Melbourne',
+      country: 'Australia',
+      state: 'Victoria',
+      lat: 0,
+      lon: 0,
+    };
+
+    render(<WeatherCard city={city} />);
+    await waitFor(() => expect(screen.getByText(12.59)).toBeInTheDocument());
   });
 });
