@@ -38,7 +38,7 @@ function App() {
       <button data-testid="search-button" onClick={buttonClickHandler}>Search</button>
 
       <div data-testid="search-results">
-        {searchResults.map((city) => (<div key={'${city.lat}-${city.lon}'} onClick={() => selectedCityHandler(city)}>{city.name}</div>))}
+        {searchResults.map((city) => (<div key={'${city.lat}-${city.lon}'} onClick={() => selectedCityHandler(city)}>{city.name}, {city.lat}, {city.lon}</div>))}
       </div>
 
       <div data-testid="my-weather-list">

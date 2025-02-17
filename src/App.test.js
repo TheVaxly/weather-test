@@ -2,7 +2,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { createMockServer } from './creatMockServer';
 import App from './App';
 import userEvent from '@testing-library/user-event';
-import { act } from 'react';
+import { act } from 'react-dom/test-utils';
+import { within } from '@testing-library/react';
 
 describe('Weather Application tests', () => {
   let server;
@@ -27,7 +28,19 @@ describe('Weather Application tests', () => {
 
     await waitFor(() => expect(screen.getAllByText(/Melbourne/i).length).toEqual(5));
   });
-  it('add search result to my weather list'), async () => {
+  it('shows city search result details', async () => {
+    render(<App />);
+
+    const input = screen.getByTestId('search-input');
+    userEvent.type(input, 'Melbourne');
+
+    const button = screen.getByTestId('search-button');
+    userEvent.click(button);
+
+    await waitFor(() => expect(screen.getAllByText(/Melbourne/i).length).toEqual(5));
+    expect(screen.getByText(/Melbourne, -37.8142454, 144.9631732/i)).toBeInTheDocument();
+  });
+  it('add search result to my weather list', async () => {
     render(<App />);
     const input = screen.getByTestId('search-input');
     userEvent.type(input, 'Melbourne');
@@ -43,5 +56,5 @@ describe('Weather Application tests', () => {
     });
 
     expect(within(screen.getByTestId('my-weather-list')).getByText(/Melbourne/i)).toBeInTheDocument();
-  };
+  });
 });
