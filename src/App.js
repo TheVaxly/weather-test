@@ -1,8 +1,7 @@
 import './App.css';
 import { useState } from 'react';
 import { createMockServer } from './createMockServer';
-import Search from './components/Search';
-import SearchResults from './components/SearchResult';
+import SearchComponent from './components/Search';
 import SelectedCities from './components/SelectedCities';
 
 createMockServer();
@@ -29,13 +28,19 @@ function App() {
 
   const handleSelectCity = (city) => {
     setSelectedCities((prevSelected) => [city, ...prevSelected]);
+    setSearchResults([]);
   };
 
   return (
     <div className="App">
       <h1>Weather Application</h1>
-      <Search query={query} setQuery={setQuery} fetchCities={fetchCities} />
-      <SearchResults searchResults={searchResults} onSelectCity={handleSelectCity} />
+      <SearchComponent 
+        query={query} 
+        setQuery={setQuery} 
+        fetchCities={fetchCities} 
+        searchResults={searchResults} 
+        onSelectCity={handleSelectCity} 
+      />
       <SelectedCities selectedCities={selectedCities} />
     </div>
   );

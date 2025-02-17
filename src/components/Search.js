@@ -1,7 +1,7 @@
 import React from 'react';
 import './Search.css';
 
-function Search({ query, setQuery, fetchCities }) {
+function SearchComponent({ query, setQuery, fetchCities, searchResults, onSelectCity }) {
   return (
     <div className='search-container'>
       <div className='input-container'>
@@ -15,8 +15,22 @@ function Search({ query, setQuery, fetchCities }) {
           Search
         </button>
       </div>
+      {searchResults.length > 0 && 
+        <div data-testid="search-results" className='search-results'>
+          {searchResults.map((city) => (
+            <div 
+              className='search-result'
+              key={`${city.lat}-${city.lon}`} 
+              onClick={() => onSelectCity(city)}
+            >
+              <span className='city-name'>{city.name}</span>
+              <span className='city-location'>{city.lat}, {city.lon}</span>
+            </div>
+          ))}
+        </div>
+      }
     </div>
   );
 }
 
-export default Search;
+export default SearchComponent;
