@@ -4,6 +4,15 @@ import App from './App';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import { within } from '@testing-library/react';
+import WeatherCard from './components/WeatherCard';
+
+let server;
+  beforeEach(() => {
+    server = createMockServer();
+  });
+  afterEach(() => {
+    server.shutdown();
+  });
 
 describe('Weather Application tests', () => {
   let server;
@@ -64,5 +73,20 @@ describe('Weather Application tests', () => {
     expect(within(screen.getByTestId('my-weather-list')).getByText(/Melbourne/i)).toBeInTheDocument();
 
     expect(screen.queryByTestId('search-results')).not.toBeInTheDocument();
+  });
+});
+
+describe('WeatherCard component tests', () => {
+  it('renders city component', () => {
+    const city = {
+      name: 'Melbourne',
+      country: 'Australia',
+      state: 'Victoria',
+      lat: 0,
+      lon: 0,
+    };
+
+    render(<WeatherCard city={city} />);
+    expect(screen.getByText(12.59)).toBeInTheDocument();
   });
 });
