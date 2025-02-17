@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { createMockServer } from './createMockServer';
-import App from './App';
+import { createMockServer } from '../mock/createMockServer';
+import App from '../App.js';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import { within } from '@testing-library/react';
-import WeatherCard from './components/WeatherCard';
+import WeatherCard from '../components/WeatherCard';
 
 let server;
 beforeEach(() => {

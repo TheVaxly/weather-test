@@ -1,6 +1,6 @@
 import './App.css';
 import { useState } from 'react';
-import { createMockServer } from './createMockServer';
+import { createMockServer } from './mock/createMockServer';
 import SearchComponent from './components/Search';
 import SelectedCities from './components/SelectedCities';
 
