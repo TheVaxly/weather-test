@@ -7,6 +7,7 @@ createMockServer();
 function App() {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [selectedCity, setSelectedCity] = useState([]);
 
   const inputChange = (e) => {
     setQuery(e.target.value);
@@ -27,6 +28,9 @@ function App() {
       });
   };
 
+  const selectedCityHandler = (city) => {
+    setSelectedCity([city, ...selectedCity]);
+  }
   return (
     <div className="App">
       <h1>Weather Application</h1>
@@ -34,7 +38,11 @@ function App() {
       <button data-testid="search-button" onClick={buttonClickHandler}>Search</button>
 
       <div data-testid="search-results">
-        {searchResults.map((city) => (<div key={'${city.lat}-${city.lon}'}>{city.name}</div>))}
+        {searchResults.map((city) => (<div key={'${city.lat}-${city.lon}'} onClick={() => selectedCityHandler(city)}>{city.name}</div>))}
+      </div>
+
+      <div data-testid="my-weather-list">
+        {selectedCity && selectedCity.map((city) => (<div key={'${city.lat}-${city.lon}'}>{city.name}</div>))}
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { createMockServer } from './creatMockServer';
 import App from './App';
 import userEvent from '@testing-library/user-event';
+import { act } from 'react';
 
 describe('Weather Application tests', () => {
   let server;
@@ -26,4 +27,21 @@ describe('Weather Application tests', () => {
 
     await waitFor(() => expect(screen.getAllByText(/Melbourne/i).length).toEqual(5));
   });
+  it('add search result to my weather list'), async () => {
+    render(<App />);
+    const input = screen.getByTestId('search-input');
+    userEvent.type(input, 'Melbourne');
+
+    const button = screen.getByTestId('search-button');
+    userEvent.click(button);
+
+    await waitFor(() => expect(screen.getAllByText(/Melbourne/i).length).toEqual(5));
+
+    const selected = screen.getAllByText(/Melbourne/i)[3];
+    act(() => {
+      userEvent.click(selected);
+    });
+
+    expect(within(screen.getByTestId('my-weather-list')).getByText(/Melbourne/i)).toBeInTheDocument();
+  };
 });
