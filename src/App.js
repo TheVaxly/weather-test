@@ -1,19 +1,18 @@
 import './App.css';
 import { useState } from 'react';
-import { createMockServer } from './creatMockServer';
+import { createMockServer } from './createMockServer';
+import Search from './components/Search';
+import SearchResults from './components/SearchResult';
+import SelectedCities from './components/SelectedCities';
 
 createMockServer();
 
 function App() {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedCity, setSelectedCity] = useState([]);
+  const [selectedCities, setSelectedCities] = useState([]);
 
-  const inputChange = (e) => {
-    setQuery(e.target.value);
-  };
-
-  const buttonClickHandler = async () => {
+  const fetchCities = () => {
     fetch(`https://openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=439d4b804bc8187953eb36d2a8c26a02`)
       .then((response) => response.json())
       .then((cities) => {
@@ -28,22 +27,16 @@ function App() {
       });
   };
 
-  const selectedCityHandler = (city) => {
-    setSelectedCity([city, ...selectedCity]);
-  }
+  const handleSelectCity = (city) => {
+    setSelectedCities((prevSelected) => [city, ...prevSelected]);
+  };
+
   return (
     <div className="App">
       <h1>Weather Application</h1>
-      <input type="text" data-testid="search-input" value={query} onChange={inputChange} />
-      <button data-testid="search-button" onClick={buttonClickHandler}>Search</button>
-
-      <div data-testid="search-results">
-        {searchResults.map((city) => (<div key={'${city.lat}-${city.lon}'} onClick={() => selectedCityHandler(city)}>{city.name}, {city.lat}, {city.lon}</div>))}
-      </div>
-
-      <div data-testid="my-weather-list">
-        {selectedCity && selectedCity.map((city) => (<div key={'${city.lat}-${city.lon}'}>{city.name}</div>))}
-      </div>
+      <Search query={query} setQuery={setQuery} fetchCities={fetchCities} />
+      <SearchResults searchResults={searchResults} onSelectCity={handleSelectCity} />
+      <SelectedCities selectedCities={selectedCities} />
     </div>
   );
 }

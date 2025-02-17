@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { createMockServer } from './creatMockServer';
+import { createMockServer } from './createMockServer';
 import App from './App';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
