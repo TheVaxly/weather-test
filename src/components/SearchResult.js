@@ -1,17 +1,22 @@
 import React from 'react';
+import './Search.css';
 
 function SearchResults({ searchResults, onSelectCity }) {
   return (
-    <div data-testid="search-results">
-      {searchResults.map((city) => (
-        <div 
-          key={`${city.lat}-${city.lon}`} 
-          onClick={() => onSelectCity(city)}
-        >
-          {city.name}, {city.lat}, {city.lon}
-        </div>
-      ))}
-    </div>
+    searchResults.length > 0 && (
+      <div data-testid="search-result" className='search-results'>
+        {searchResults.map((city) => (
+          <div 
+            className='search-result'
+            key={`${city.lat}-${city.lon}`} 
+            onClick={() => onSelectCity(city)}
+          >
+            <span className='city-name'>{city.name}</span>
+            <span className='city-location'>{city.lat}, {city.lon}</span>
+          </div>
+        ))}
+      </div>
+    )
   );
 }
 
